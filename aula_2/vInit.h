@@ -1,3 +1,16 @@
+/** @file vInit.h
+ * @brief vInit.h file brief decription 
+ *
+ * Header file for the implementation of the vInit function
+ * 
+ * @author Diogo Silva
+ * @date 15 March 2022
+ * @bug No known bugs.
+ */
+
+#ifndef _VINIT_H
+#define _VINIT_H
+
 #include <stdio.h>
 #include <stdint.h>
 
@@ -11,3 +24,5 @@
 **/
 
 void vInit(uint32_t* vector, uint32_t size);
+
+#endif
