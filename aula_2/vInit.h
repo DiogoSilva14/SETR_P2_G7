@@ -1,3 +1,13 @@
+/** @file vinit.h
+ * @brief vinit.h file brief decription 
+ *
+ * Header file for the implementation of the vInit function
+ * 
+ * @author Diogo Silva
+ * @date 15 March 2022
+ * @bug No known bugs.
+ */
+
 #include <stdio.h>
 #include <stdint.h>
 
