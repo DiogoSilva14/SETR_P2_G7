@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-
-
 uint32_t vAdd(uint32_t *num_v, uint32_t size){
     uint32_t V_sum=0;
     for (int i = 0; i<size; i++){
