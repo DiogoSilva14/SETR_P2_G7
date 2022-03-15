@@ -1,9 +1,18 @@
+/**
+ * @file vAdd.h
+ * @author Gonçalo Gomes
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-15
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stdio.h>
 #include <stdint.h>
 
 /**
-*   @brief This function initializes a vector by filling it with natural numbers
-*   from 1 to size+1
+*   @brief This function sums all the values inside a vector
 *
 *   @param *vector pointer to the vector to the filled
 *   @param size size of the vector to be filled. Incorrect size could lead to bad
