@@ -1,6 +1,7 @@
 
-#include  <stdio.h>
-#include  <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+
 
 
 uint32_t vAdd(uint32_t *num_v, uint32_t size){
