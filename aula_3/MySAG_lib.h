@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #define MAX_SIZE 100
 
@@ -21,5 +22,9 @@
 typedef struct MySAG {
     uint32_t data[MAX_SIZE];
     uint16_t size;
-    bool initialized = false;
 } MySAG;
+
+uint32_t mysag_min(MySAG *mysag);
+
+
+
