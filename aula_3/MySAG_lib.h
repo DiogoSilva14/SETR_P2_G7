@@ -63,3 +63,11 @@ uint32_t MySAGMin(MySAG *mysag);
  */
 
 int32_t MySAGInsert(MySAG* mysag_array, uint32_t value);
+
+/** @brief This function calculates the number of appearences of a certain number in the array
+ *  @param mysag_array pointer to the MySAG array
+ *  @param value value to be found on array
+ *  @return average value
+ */
+
+int32_t MySAGFreq(MySAG* mysag_array, uint32_t value)
