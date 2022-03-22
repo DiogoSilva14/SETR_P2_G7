@@ -55,3 +55,18 @@ int32_t MySAGInsert(MySAG* mysag_array, uint32_t value){
 
     return 0;
 }
+<<<<<<< HEAD
+=======
+
+int32_t MySAGFreq(MySAG* mysag_array, uint32_t value)
+{
+    int32_t freq = 0;
+
+    for(uint16_t i = 0; i < mysag_array->size; i++)
+        {
+            if(mysag_array->data[i] == value)
+                freq += 1;
+        }
+    return freq;
+}
+>>>>>>> MySAGFreq
