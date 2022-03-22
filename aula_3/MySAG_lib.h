@@ -29,3 +29,10 @@ typedef struct MySAG {
  */
 
 int32_t MySAGInit(MySAG* mysag_array);
+
+/**
+*   @brief This function returns the max value inside the data array
+*
+*   @param mysag pointer to the data structer
+**/
+uint32_t MySAGMax(MySAG *mysag);
