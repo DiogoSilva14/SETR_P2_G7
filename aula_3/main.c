@@ -11,6 +11,8 @@
 #include <stdint.h>
 #include "MySAG_lib.h"
 
+MySAG MySAG_array;
+
 int main(){
     printf("Hello world!\n");
     return 0;

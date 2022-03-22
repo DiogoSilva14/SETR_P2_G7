@@ -1,5 +1,5 @@
 P=MySAG
-OBJECTS= main.o
+OBJECTS= main.o MySAG_lib.o
 CFLAGS = -g -Wall -O3
 LDLIBS=
 CC=gcc
