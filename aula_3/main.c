@@ -14,6 +14,8 @@
 MySAG* MySAG_array;
 
 int main(){
-    printf("Hello world!\n");
+
+    MySAGInit(&MySAG_array);
+
     return 0;
 }
