@@ -35,7 +35,7 @@ int32_t MySAGInit(MySAG* mysag_array);
  *  @return average value
  */
 
-uint32_t MySagAvg(MySAG *mysag_array)
+uint32_t MySagAvg(MySAG *mysag_array);
 
 /**
 *   @brief This function returns the max value inside the data array

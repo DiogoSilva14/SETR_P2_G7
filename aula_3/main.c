@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include "MySAG_lib.h"
 
-MySAG *MySAG_array;
+MySAG MySAG_array;
 
 int main(){
 
