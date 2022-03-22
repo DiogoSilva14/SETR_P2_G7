@@ -21,7 +21,15 @@ int main(){
         MySAGInsert(&MySAG_array, i);
         
         if(MySAG_array.data[i] != i){
-            printf("Wrong\n");
+            printf("Error on insert\n");
+        }
+
+        if(MySAGMax(&MySAG_array) != i){
+            printf("Error on Max\n");
+        }
+
+        if(MySAGMin(&MySAG_array) != 0){
+            printf("Error on Min\n");
         }
     }
 
