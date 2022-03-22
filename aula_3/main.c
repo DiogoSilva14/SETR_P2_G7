@@ -17,5 +17,13 @@ int main(){
 
     MySAGInit(&MySAG_array);
 
+    for(int i=0; i < 100; i++){
+        MySAGInsert(&MySAG_array, i);
+        
+        if(MySAG_array.data[i] != i){
+            printf("Wrong\n");
+        }
+    }
+
     return 0;
 }
