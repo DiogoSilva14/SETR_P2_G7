@@ -22,7 +22,6 @@ uint32_t MySAGMax(MySAG *mysag){
     return temp;
 }
 
-
 uint32_t MySAGMin(MySAG *mysag){
     uint32_t temp=mysag->data[1];
     

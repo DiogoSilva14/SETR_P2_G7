@@ -33,5 +33,7 @@ int main(){
         }
     }
 
+    printf("Tests ended\n");
+
     return 0;
 }
