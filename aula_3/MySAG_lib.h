@@ -30,6 +30,7 @@ typedef struct MySAG {
 
 int32_t MySAGInit(MySAG* mysag_array);
 
+<<<<<<< HEAD
 /** @brief This function calculates the average value of array
  *  @param mysag_array pointer to the MySAG array
  *  @return average value
@@ -37,6 +38,14 @@ int32_t MySAGInit(MySAG* mysag_array);
 
 uint32_t MySagAvg(MySAG *mysag_array)
 
+=======
+/**
+*   @brief This function returns the max value inside the data array
+*
+*   @param mysag pointer to the data structer
+**/
+uint32_t MySAGMax(MySAG *mysag);
+>>>>>>> 5dc9b46424489910caf0abdc83c8986d1f89eccf
 /** @brief This function inserts values to the array
  *  @param mysag_array pointer to the MySAG array
  *         value is an unsigned integer to be added to the array

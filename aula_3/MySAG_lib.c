@@ -1,6 +1,7 @@
 #include "MySAG_lib.h"
 #include <stdbool.h>
 
+<<<<<<< HEAD
 uint32_t MySagAvg(MySAG *mysag_array)
 {
     uint32_t sum = 0,avg = 0;
@@ -11,6 +12,19 @@ uint32_t MySagAvg(MySAG *mysag_array)
     avg = sum/mysag_array->size;
     return avg;
 }
+=======
+uint32_t MySAGMax(MySAG *mysag){
+    uint32_t temp=0;
+    
+    for (uint16_t i=0; i < (mysag->size); i++){
+        if (mysag->data[i]>temp)
+            temp = mysag->data[i];
+    }
+
+    return temp;
+}
+
+>>>>>>> 5dc9b46424489910caf0abdc83c8986d1f89eccf
 
 int32_t MySAGInit(MySAG* mysag_array){
     for(int i=0; i < MAX_SIZE; i++){
@@ -36,4 +50,7 @@ int32_t MySAGInsert(MySAG* mysag_array, uint32_t value){
 
     return 0;
 }
+<<<<<<< HEAD
 >>>>>>> aula_3
+=======
+>>>>>>> 5dc9b46424489910caf0abdc83c8986d1f89eccf
