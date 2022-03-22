@@ -13,6 +13,17 @@ uint32_t MySAGMax(MySAG *mysag){
 }
 
 
+uint32_t MySAGMin(MySAG *mysag){
+    uint32_t temp=mysag->data[1];
+    
+    for (uint16_t i=0; i < (mysag->size); i++){
+        if (mysag->data[i]<temp)
+            temp = mysag->data[i];
+    }
+
+    return temp;
+}
+
 int32_t MySAGInit(MySAG* mysag_array){
     for(int i=0; i < MAX_SIZE; i++){
         mysag_array->data[i] = 0;

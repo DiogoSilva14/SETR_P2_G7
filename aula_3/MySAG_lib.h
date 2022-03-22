@@ -34,8 +34,20 @@ int32_t MySAGInit(MySAG* mysag_array);
 *   @brief This function returns the max value inside the data array
 *
 *   @param mysag pointer to the data structer
+*   @return max value of the data array
 **/
+
 uint32_t MySAGMax(MySAG *mysag);
+
+/**
+*   @brief This function returns the minimun value inside the data array
+*
+*   @param mysag pointer to the data structer
+*   @return minimun value of the data array
+**/
+
+uint32_t MySAGMin(MySAG *mysag);
+
 /** @brief This function inserts values to the array
  *  @param mysag_array pointer to the MySAG array
  *         value is an unsigned integer to be added to the array
