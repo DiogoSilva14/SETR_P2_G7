@@ -21,9 +21,6 @@
 typedef struct MySAG {
     uint32_t data[MAX_SIZE];
     uint16_t size;
-<<<<<<< HEAD
-} MySAG;
-=======
 } MySAG;
 
 /** @brief This function inits the MySAG type. The data array is set all zeroes
@@ -32,4 +29,10 @@ typedef struct MySAG {
  */
 
 int32_t MySAGInit(MySAG* mysag_array);
->>>>>>> aula_3
+
+/** @brief This function calculates the average value of array
+ *  @param mysag_array pointer to the MySAG array
+ *  @return average value
+ */
+
+uint32_t MySagAvg(MySAG *mysag_array)
