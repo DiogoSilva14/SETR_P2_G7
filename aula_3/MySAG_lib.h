@@ -70,4 +70,4 @@ int32_t MySAGInsert(MySAG* mysag_array, uint32_t value);
  *  @return average value
  */
 
-int32_t MySAGFreq(MySAG* mysag_array, uint32_t value)
+int32_t MySAGFreq(MySAG* mysag_array, uint32_t value);
