@@ -1,0 +1,14 @@
+/**
+
+@mainpage MySag Documentation 
+
+@authors Diogo Silva 
+@authors Gonçalo Gomes
+@authors Mário Dias 
+
+This is a simple app made in class. In this app, there is a function that initializes a struct containing a data array and its size (number of positions occupied by data). There's a function that adds a new data entry and updates the size, one that returns the maximum value within the data array, one that returns the minimun, one that returs the average value of the data and one that returns the number of times that one value exists in the stream window.   
+
+
+
+*/
+
