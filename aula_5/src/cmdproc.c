@@ -36,14 +36,14 @@ static unsigned char cmdStringLen = 0;
 /* ************************************************************ */
 int cmdProcessor(void)
 {
-	int i;
+	int i = 0;
 	
 	/* Detect empty cmd string */
 	if(cmdStringLen == 0)
 		return -1; 
 	
 	/* Find index of SOF */
-	for(i=0; i < cmdStringLen; i++) {
+	for(; i < cmdStringLen; i++) {
 		if(cmdString[i] == SOF_SYM) {
 			break;
 		}
@@ -52,20 +52,29 @@ int cmdProcessor(void)
 	/* If a SOF was found look for commands */
 	if(i < cmdStringLen) {
 		if(cmdString[i+1] == 'P') { /* P command detected */
+			/* Check for wrong checksum */
+			if(((unsigned char)(cmdString[i+1]+cmdString[i+2]+cmdString[i+3]+cmdString[i+4])) != (unsigned char)cmdString[i+5]){
+				return -3; // Wrong checksum
+			}
+			
 			Kp = cmdString[i+2];
 			Ti = cmdString[i+3];
 			Td = cmdString[i+4];
 			resetCmdString();
 			return 0;
-		}
+		} else if(cmdString[i+1] == 'S') { /* S command detected */
+			if(((unsigned char)'S') != (unsigned char)cmdString[i+2]){
+				return -3; // Wrong checksum
+			}
 		
-		if(cmdString[i+1] == 'S') { /* S command detected */
 			printf("Setpoint = %d, Output = %d, Error = %d", setpoint, output, error);
 			resetCmdString();
 			return 0;
-		}		
-	}
+		}else{
+			return -2;
+		}
 	
+	}
 	/* cmd string not null and SOF not found */
 	return -4;
 

@@ -19,7 +19,8 @@ MKDIR = mkdir -p
 
 #Compiler
 C_COMPILER = gcc
-CFLAGS=-std=c89
+CFLAGS=-std=c99
+CFLAGS += -g3
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Wpointer-arith
