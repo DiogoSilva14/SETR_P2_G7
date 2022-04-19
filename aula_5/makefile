@@ -1,6 +1,3 @@
-# Paulo Pedreiras, Mar/2022
-# Adapted from the ThrowTheSwitch.org   
-# 
 # This makefile assumes that test source and test files are in folders 
 #   "src" and "test", respectively
 # Moreover, this makefile, "src" and "test" are within the root Unity 
@@ -9,7 +6,7 @@
 # 	file, and the test file is testMODULENAME.c
 # If the rules above are obeyed only MODULE_NAME needs to be adjusted
 
-MODULE_NAME = MyVectorLib
+MODULE_NAME = cmdproc
 
 # Paths
 UNITY_ROOT = unity
