@@ -6,3 +6,10 @@
  * @date 03 May 2022
  * @bug No known bugs.
  */
+
+#include "vending_machine.h"
+
+int main(){
+
+    return 0;
+}
