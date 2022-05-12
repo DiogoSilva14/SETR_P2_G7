@@ -28,7 +28,9 @@ void sm_loop(){
 
             get_last_event(last_event);
 
-            if(*last_event == EVENT_SELECT && (get_user_money() > get_prod_val())){
+            if(last_event == NULL){
+                ;
+            }else if(*last_event == EVENT_SELECT && (get_user_money() > get_prod_val())){
                 *next_state = STATE_DISPENSE_PRODUCT;
             }else if(*last_event == EVENT_SELECT && (get_user_money() < get_prod_val())){
                 *next_state = STATE_ERROR_MESSAGE;
