@@ -92,7 +92,7 @@ void display_product_money(){
 
     char string[200];
 
-    sprintf(string, "%s: %.1f . You have %.1f\r", prod_name, get_prod_val(), get_user_money());
+    sprintf(string, "%s: %.1f . You have %.1f     \r", prod_name, get_prod_val(), get_user_money());
 
     print(string);
 }
