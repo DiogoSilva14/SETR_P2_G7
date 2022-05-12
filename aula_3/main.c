@@ -16,9 +16,12 @@ MySAG MySAG_array;
 int main(){
 
     MySAGInit(&MySAG_array);
+    uint32_t sum = 0;
 
     for(int i=0; i < 100; i++){
         MySAGInsert(&MySAG_array, i);
+
+        sum += i;
         
         if(MySAG_array.data[i] != i){
             printf("Error on insert\n");
@@ -30,6 +33,14 @@ int main(){
 
         if(MySAGMin(&MySAG_array) != 0){
             printf("Error on Min\n");
+        }
+
+        if(MySAGFreq(&MySAG_array, i) != 1){
+            printf("Error on Freq\n");
+        }
+
+        if(MySagAvg(&MySAG_array) != (sum/(i+1))){
+            printf("Error on Avg\n");
         }
     }
 
