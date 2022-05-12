@@ -36,34 +36,67 @@ void set_user_money(float new_val){
 }
 
 void dispense_prod(){
-    // Print "dispensing product...."
+    char string[50];
+
+    sprintf(string, "Dispensing product...\n");
+
+    print(string);
+
     set_user_money(get_user_money() - get_prod_val());
-    // Sleep for x seconds
+    device_sleep(5000);
 }
 
-void cycle_prod(uint8_t dir){
+void cycle_prod(){
+    uint8_t dir = get_arrow_val();
+
     if(dir == UP){
-        new_prod(++get_curr_product() % NUM_PRODUCTS);
+        set_curr_product((get_curr_product()+1) % NUM_PRODUCTS);
     }else{
-        new_prod(((get_curr_product() + NUM_PRODUCTS) - 1) % NUM_PRODUCTS);
+        set_curr_product(((get_curr_product() + NUM_PRODUCTS) - 1) % NUM_PRODUCTS);
     }
 }
 
 void return_money(){
-    // Print returning x money
+    char string[50];
+
+    sprintf(string, "Returning %.1f €\n", get_user_money());
+
+    print(string);
+
     set_user_money(0);
 }
 
 void error_msg(){
-    // Print you dont have money for x product. X money left
+    char string[50];
+
+    sprintf(string, "The product you want costs %.1f but you only have %.1f\n", get_prod_val(), get_user_money());
+
+    print(string);
 }
 
 void display_product_money(){
-    // Print you have X
-    // Current product costs X
+    char prod_name[50];
+
+    switch(get_curr_product()){
+        case BEER:
+            strcpy(prod_name, "BEER");
+            break;
+        case TUNA_SANDWICH:
+            strcpy(prod_name, "TUNA_SANDWICH");
+            break;
+        case COFFEE:
+            strcpy(prod_name, "COFFEE");
+            break;
+    }
+
+
+    char string[200];
+
+    sprintf(string, "%s: %.1f . You have %.1f\r", prod_name, get_prod_val(), get_user_money());
+
+    print(string);
 }
 
 void coin_inserted(){
-    // Get_Coin_val from drivers
-    // Add coin val to user money
+    set_user_money(get_user_money() + get_coin_val());
 }
