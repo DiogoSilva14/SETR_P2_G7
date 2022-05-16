@@ -13,6 +13,7 @@
 #include <devicetree.h>
 #include <device.h>
 #include <drivers/gpio.h>
+#include <stdio.h>
 
 #define GPIO0_NID DT_NODELABEL(gpio0)
 
