@@ -2,6 +2,7 @@
 #include <device.h>
 #include <drivers/gpio.h>
 #include <drivers/pwm.h>
+#include <drivers/adc.h>
 #include <sys/printk.h>
 #include <sys/__assert.h>
 #include <string.h>
@@ -65,7 +66,7 @@ uint8_t init_drivers();
 int adc_sample(void);
 uint16_t get_adc_buffer();
 void init_adc();
-void init_pwm();
+int init_pwm();
 void pwm_duty_cycle(float new_duty_cycle);
 bool get_button_press(uint8_t button_num);
 int64_t get_uptime();

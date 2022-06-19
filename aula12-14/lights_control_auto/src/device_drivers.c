@@ -39,33 +39,40 @@ struct k_sem sem_aa;
 struct k_sem sem_ab;
 struct k_sem sem_bc;
 
+/* Pointer to PWM device structure */
+const struct device *pwm0_dev; 
+
 bool button_pressed[4];
 
 void pressed_board_1(const struct device *dev, struct gpio_callback *cb, uint32_t pins){
-    if(verbose)
+    if(verbose){
         printk("Button 1 pressed\n");
+	}
 
 	button_pressed[0] = true;
 }
 
 void pressed_board_2(const struct device *dev, struct gpio_callback *cb, uint32_t pins){
-	if(verbose)
+	if(verbose){
         printk("Button 2 pressed\n");
-    
+	}
+
 	button_pressed[1] = true;
 }
 
 
 void pressed_board_3(const struct device *dev, struct gpio_callback *cb, uint32_t pins){
-	if(verbose)
+	if(verbose){
         printk("Button 3 pressed\n");
+	}
     
 	button_pressed[2] = true;	
 }
 
 void pressed_board_4(const struct device *dev, struct gpio_callback *cb, uint32_t pins){
-    if(verbose)
+    if(verbose){
         printk("Button 4 pressed\n");
+	}
     
     button_pressed[3] = true;
 }
@@ -182,33 +189,35 @@ void init_adc(){
     NRF_SAADC->TASKS_CALIBRATEOFFSET = 1;
 }
 
-void init_pwm(){
-	/* Pointer to PWM device structure */
-	const struct device *pwm0_dev; 
-
-	/* Return variable for syscall errors */
-	int ret=0;
-
+int init_pwm(){
 	/* Bind to PWM */
 	pwm0_dev = device_get_binding(DT_LABEL(PWM0_NID));	
     if (pwm0_dev == NULL) {
 		printk("Error: Failed to bind to PWM0\n r");
-		return;
+		return -1;
     }else{
-        printk("Bind to PWM0 successful\n\r");            
+		if(verbose){
+			printk("Bind to PWM0 successful\n\r"); 
+		}
+
+		return 0;       
     }
 }
 
 void pwm_duty_cycle(float new_duty_cycle){
-	if(verbose)
+	if(verbose){
 		printk("DUTY_CYCLE: %d \r", (int)(new_duty_cycle));
+	}
+
+	int ret;
 
 	/* Apply the PWM signal and indicate the error in case there is any */
 	ret = pwm_pin_set_usec(pwm0_dev, PWM_OUTPUT_PIN,
 		PWM_PERIOD_USEC,(unsigned int)((PWM_PERIOD_USEC*(unsigned int)new_duty_cycle)/100), PWM_POLARITY_NORMAL);
 
-	if(ret)
+	if(ret){
 		printk("Error %d setting PWM\n", ret);
+	}
 }
 
 bool get_button_press(uint8_t button_num){
