@@ -8,8 +8,17 @@ void thread_A_code(void *argA, void *argB, void *argC);
 void thread_B_code(void *argA, void *argB, void *argC);
 void thread_C_code(void *argA, void *argB, void *argC);
 
+/* PWM Output val */
 float pwm_val = 0;
 
+/**
+ * @brief Main function
+ *
+ * Initializes the device drivers, light automation system and the threads. After that the 
+ * main function loop is responsible for user interaction with the objective of changing
+ * the system behavior and/or tune the system parameters.
+ *
+ */
 void main(void){
 	init_drivers();
   init_automation();
@@ -55,6 +64,12 @@ void main(void){
 
 }
 
+/**
+ * @brief Thread A code
+ * 
+ * Thread A is responsible for sampling the ADC value via device drivers
+ *
+ */
 void thread_A_code(void *argA , void *argB, void *argC){
   /* Timing variables to control task periodicity */
   int64_t fin_time=0, release_time=0;
@@ -79,6 +94,14 @@ void thread_A_code(void *argA , void *argB, void *argC){
   }
 }
 
+/**
+ * @brief Thread B code
+ * 
+ * Thread B is responsible for getting the PWM output value from the light automation system,
+ * which runs the PI controller or the manually changed value.
+ *
+ */
+
 void thread_B_code(void *argA , void *argB, void *argC){
   /* Thread loop */
   while(1) {
@@ -89,6 +112,13 @@ void thread_B_code(void *argA , void *argB, void *argC){
     sem_give(SEM_BC);     
   }
 }
+
+/**
+ * @brief Thread C code
+ * 
+ * Thread C is responsible for outputting the PWM value.
+ *
+ */
 
 void thread_C_code(void *argA , void *argB, void *argC){
 	/* Thread loop */

@@ -23,8 +23,18 @@ void PI_init(float setpoint);
  */
 float PI_loop(float input_value);
 
+/** @brief Changes the setpoint of the PI controller
+ *
+ *  @param new_setpoint new setpoint for the PI controller
+ * 
+ */
 void PI_change_setpoint(float new_setpoint);
 
+/** @brief Get the current PI controller setpoint
+ *
+ *  @return current PI setpoint
+ * 
+ */
 float get_setpoint();
 
 #endif

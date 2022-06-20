@@ -67,27 +67,150 @@
 #define THREAD_B 2
 #define THREAD_C 3
 
+/** 
+ * @brief Callback function for button 1 press
+ */
 void pressed_board_1(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
+
+/** 
+ * @brief Callback function for button 2 press
+ */
 void pressed_board_2(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
+
+/** 
+ * @brief Callback function for button 3 press
+ */
 void pressed_board_3(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
+
+/** 
+ * @brief Callback function for button 4 press
+ */
 void pressed_board_4(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
+
+/** 
+ * @brief Indicates if any button has been pressed
+ * 
+ * @return bool indicating if any button has been pressed
+ */
 bool button_rdy();
+
+/** 
+ * @brief Function responsible for initializing everything associated with the device drivers
+ * like data structures and binds
+ * 
+ * @return error number in case of any problem initializing. 0 if successful
+ */
 uint8_t init_drivers();
+
+/** 
+ * @brief Samples a value from the ADC
+ * 
+ * @return error code in case of error sampling from ADC. 0 if successful
+ */
 int adc_sample(void);
+
+/** 
+ * @brief Gets the value samples from the ADC
+ * 
+ * @return value sampled by the ADC
+ */
 uint16_t get_adc_buffer();
+
+/** 
+ * @brief Initializes the ADC
+ */
 void init_adc();
+
+/** 
+ * @brief Initializes the PWM module
+ * 
+ * @return error code in case theres any, 0 if successful
+ */
 int init_pwm();
+
+/** 
+ * @brief Change the PWM output duty cycle
+ * 
+ * @param new_duty_cycle New duty cycle to be outputed by the PWM module
+ */
 void pwm_duty_cycle(float new_duty_cycle);
+
+/** 
+ * @brief Indicates if the specified button has been pressed
+ * 
+ * @param button_num button to get press
+ * 
+ * @return boolean indicated if the speficied button has been pressed or not
+ */
 bool get_button_press(uint8_t button_num);
+
+/** 
+ * @brief Get the microcontroller uptime in miliseconds
+ * 
+ * @return uptime in miliseconds
+ */
 int64_t get_uptime();
+
+/** 
+ * @brief Sleeps for the amount specified
+ * 
+ * @param ms miliseconds to sleep
+ */
 void sleep_ms(int32_t ms);
+
+/** 
+ * @brief Initialize the specified semaphores with the specified values
+ * 
+ * @param semaph Semaphore to be initialized. Use SEM_AA, SEM_AB and SEM_BC defines.
+ * @param start_val Starting value of the semaphore
+ * @param max_val Maximum value of the semaphore
+ */
 int sem_init(uint8_t semaph, uint8_t start_val, uint8_t max_val);
+
+/** 
+ * @brief Increments the specified semaphore
+ * 
+ * @param semaph Semaphore to be incremented. Use SEM_AA, SEM_AB and SEM_BC defines.
+ */
 void sem_give(uint8_t semaph);
+
+/** 
+ * @brief Take the specified semaphore
+ * 
+ * @param semaph Semaphore to be taken. Use SEM_AA, SEM_AB and SEM_BC defines.
+ */
 int sem_take(uint8_t semaph);
+
+/** 
+ * @brief Creates the specified semaphore
+ * 
+ * @param thread_num Thread to be created. Use THREAD_A, THREAD_B and THREAD_C defines.
+ * @param fun function for the thread to run
+ */
 void thread_create(uint8_t thread_num, void (*fun)());
+
+/** 
+ * @brief Initialize UART module
+ */
 void init_uart();
+
+/** 
+ * @brief Indicates if the UART has characters ready to be received
+ * 
+ * @return bool indicating if there are characters to be read
+ */
 bool uart_rx_rdy();
+
+/** 
+ * @brief Gets the last character read by the UART
+ * 
+ * @return Last character read by the uart
+ */
 char get_char();
+
+/** 
+ * @brief UART RX callback
+ */
 static void uart_cb(const struct device *dev, struct uart_event *evt, void *user_data);
 
 #endif
