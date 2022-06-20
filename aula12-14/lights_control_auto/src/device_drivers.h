@@ -1,3 +1,6 @@
+#ifndef _DEVICE_DRIVERS_H    /* Guard against multiple inclusion */
+#define _DEVICE_DRIVERS_H
+
 #include <zephyr.h>
 #include <device.h>
 #include <drivers/gpio.h>
@@ -12,6 +15,7 @@
 #include "nrfx_pwm.h"
 #include <drivers/pwm.h>
 #include <hal/nrf_saadc.h>
+#include <drivers/uart.h>
 
 #define GPIO0_NID DT_NODELABEL(gpio0)
 
@@ -50,6 +54,11 @@
 /* Therad periodicity (in ms)*/
 #define thread_A_period 100
 
+#define UART_NID DT_NODELABEL(uart0)    /* UART Node label, see dts */
+#define RXBUF_SIZE 1                   /* RX buffer size */
+#define TXBUF_SIZE 60                   /* TX buffer size */
+#define RX_TIMEOUT 1000                  /* Inactivity period after the instant when last char was received that triggers an rx event (in us) */
+
 #define SEM_AA 1
 #define SEM_AB 2
 #define SEM_BC 3
@@ -62,6 +71,7 @@ void pressed_board_1(const struct device *dev, struct gpio_callback *cb, uint32_
 void pressed_board_2(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
 void pressed_board_3(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
 void pressed_board_4(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
+bool button_rdy();
 uint8_t init_drivers();
 int adc_sample(void);
 uint16_t get_adc_buffer();
@@ -70,8 +80,14 @@ int init_pwm();
 void pwm_duty_cycle(float new_duty_cycle);
 bool get_button_press(uint8_t button_num);
 int64_t get_uptime();
-void sleep_ms(int32_t);
+void sleep_ms(int32_t ms);
 int sem_init(uint8_t semaph, uint8_t start_val, uint8_t max_val);
 void sem_give(uint8_t semaph);
 int sem_take(uint8_t semaph);
 void thread_create(uint8_t thread_num, void (*fun)());
+void init_uart();
+bool uart_rx_rdy();
+char get_char();
+static void uart_cb(const struct device *dev, struct uart_event *evt, void *user_data);
+
+#endif

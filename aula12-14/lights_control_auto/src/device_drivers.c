@@ -42,6 +42,27 @@ struct k_sem sem_bc;
 /* Pointer to PWM device structure */
 const struct device *pwm0_dev; 
 
+/* Struct for UART configuration (if using default valuies is not needed) */
+const struct uart_config uart_cfg = {
+		.baudrate = 115200,
+		.parity = UART_CFG_PARITY_NONE,
+		.stop_bits = UART_CFG_STOP_BITS_1,
+		.data_bits = UART_CFG_DATA_BITS_8,
+		.flow_ctrl = UART_CFG_FLOW_CTRL_NONE
+};
+
+const struct device *uart_dev;          /* Pointer to device struct */ 
+static uint8_t rx_buf[RXBUF_SIZE];      /* RX buffer, to store received data */
+static uint8_t rx_chars[RXBUF_SIZE];    /* chars actually received  */
+volatile int uart_rx_rdy_flag;          /* Flag to signal main() that a message is available */
+
+/* UART callback function prototype */
+static void uart_cb(const struct device *dev, struct uart_event *evt, void *user_data);
+
+uint8_t rep_mesg[TXBUF_SIZE];
+
+int err;
+
 bool button_pressed[4];
 
 void pressed_board_1(const struct device *dev, struct gpio_callback *cb, uint32_t pins){
@@ -144,6 +165,10 @@ uint8_t init_drivers(){
 
     init_adc();
 
+	init_uart();
+
+	init_pwm();
+
     return 0;
 }
 
@@ -206,14 +231,14 @@ int init_pwm(){
 
 void pwm_duty_cycle(float new_duty_cycle){
 	if(verbose){
-		printk("DUTY_CYCLE: %d \r", (int)(new_duty_cycle));
+		printk("DUTY_CYCLE: %d \r", (int)(100 - new_duty_cycle));
 	}
 
 	int ret;
 
 	/* Apply the PWM signal and indicate the error in case there is any */
 	ret = pwm_pin_set_usec(pwm0_dev, PWM_OUTPUT_PIN,
-		PWM_PERIOD_USEC,(unsigned int)((PWM_PERIOD_USEC*(unsigned int)new_duty_cycle)/100), PWM_POLARITY_NORMAL);
+		PWM_PERIOD_USEC,(unsigned int)((PWM_PERIOD_USEC*(unsigned int)(100 - new_duty_cycle))/100), PWM_POLARITY_NORMAL);
 
 	if(ret){
 		printk("Error %d setting PWM\n", ret);
@@ -226,6 +251,10 @@ bool get_button_press(uint8_t button_num){
 	button_pressed[button_num - 1] = false;
 
 	return val;
+}
+
+bool button_rdy(){
+	return button_pressed[0] || button_pressed[1] || button_pressed[2] || button_pressed[3];
 }
 
 int64_t get_uptime(){
@@ -284,4 +313,99 @@ void thread_create(uint8_t thread_num, void (*fun)()){
 			K_THREAD_STACK_SIZEOF(thread_C_stack), fun,
 			NULL, NULL, NULL, thread_B_prio, 0, K_NO_WAIT);
 	}
+}
+
+void init_uart(){
+	/* Bind to UART */
+	uart_dev= device_get_binding(DT_LABEL(UART_NID));
+    if (uart_dev == NULL) {
+        printk("device_get_binding() error for device %s!\n\r", DT_LABEL(UART_NID));
+        return;
+    }
+
+	/* Configure UART */
+    err = uart_configure(uart_dev, &uart_cfg);
+    if (err == -ENOSYS) { /* If invalid configuration */
+        printk("uart_configure() error. Invalid configuration\n\r");
+        return; 
+    }	
+
+	/* Register callback */
+    err = uart_callback_set(uart_dev, uart_cb, NULL);
+    if (err) {
+        printk("uart_callback_set() error. Error code:%d\n\r",err);
+        return;
+    }
+
+	/* Enable data reception */
+    err =  uart_rx_enable(uart_dev ,rx_buf,sizeof(rx_buf),RX_TIMEOUT);
+    if (err) {
+        printk("uart_rx_enable() error. Error code:%d\n\r",err);
+        return;
+    }
+}
+
+/* UART callback implementation */
+/* Note that callback functions are executed in the scope of interrupt handlers. */
+/* They run asynchronously after hardware/software interrupts and have a higher priority than all threads */
+/* Should be kept as short and simple as possible. Heavier processing should be deferred to a task with suitable priority*/
+static void uart_cb(const struct device *dev, struct uart_event *evt, void *user_data){
+
+	switch (evt->type) {
+		
+		case UART_TX_DONE:
+			//printk("UART_TX_DONE event \n\r");
+			break;
+
+		case UART_TX_ABORTED:
+			//printk("UART_TX_ABORTED event \n\r");
+			break;
+			
+		case UART_RX_RDY:
+			//printk("UART_RX_RDY event \n\r");
+					/* Just copy data to a buffer. Usually it is preferable to use e.g. a FIFO to communicate with a task that shall process the messages*/
+					memcpy(rx_chars,&(rx_buf[evt->data.rx.offset]),evt->data.rx.len); 
+					rx_chars[evt->data.rx.len]=0; /* Terminate the string */
+					uart_rx_rdy_flag = 1;
+			break;
+
+		case UART_RX_BUF_REQUEST:
+			//printk("UART_RX_BUF_REQUEST event \n\r");
+			break;
+
+		case UART_RX_BUF_RELEASED:
+			//printk("UART_RX_BUF_RELEASED event \n\r");
+			break;
+			
+		case UART_RX_DISABLED: 
+					/* When the RX_BUFF becomes full RX is is disabled automaticaly.  */
+					/* It must be re-enabled manually for continuous reception */
+					//printk("UART_RX_DISABLED event \n\r");
+			err =  uart_rx_enable(uart_dev ,rx_buf,sizeof(rx_buf),RX_TIMEOUT);
+					if (err) {
+						printk("uart_rx_enable() error. Error code:%d\n\r",err);              
+					}
+			break;
+
+		case UART_RX_STOPPED:
+			//printk("UART_RX_STOPPED event \n\r");
+			break;
+			
+		default:
+			printk("UART: unknown event \n\r");
+			break;
+	}
+}
+
+bool uart_rx_rdy(){
+	if(uart_rx_rdy_flag){
+		uart_rx_rdy_flag = 0;
+		return true;
+	}else{
+		return false;
+	}
+}
+
+char get_char(){
+	return rx_buf[0];
 }
