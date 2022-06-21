@@ -1,3 +1,12 @@
+/** @file device_drivers.h
+ * @brief Device Drivers implementation
+ *
+ * This is a library made for the SETR project. It is respnsible for the innitialization of the drivers
+ * 
+ * @date 20 June 2022
+ * @bug No known bugs.
+ */
+ 
 #ifndef _DEVICE_DRIVERS_H    /* Guard against multiple inclusion */
 #define _DEVICE_DRIVERS_H
 

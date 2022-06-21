@@ -1,3 +1,11 @@
+/** @file main.c
+ * @brief main implementation
+ *
+ * Main file for the Lights_Project
+ * 
+ * @date 20 June 2022
+ * @bug No known bugs.
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include "device_drivers.h"

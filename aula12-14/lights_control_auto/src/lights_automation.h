@@ -1,3 +1,12 @@
+/** @file lights_automation.h
+ * @brief Device Drivers implementation
+ *
+ * This is a library made for the SETR project. It is respnsible for the control of the automatic mode
+ * 
+ * @date 20 June 2022
+ * @bug No known bugs.
+ */
+ 
 #ifndef _LIGHTS_AUTO_H    /* Guard against multiple inclusion */
 #define _LIGHTS_AUTO_H
 

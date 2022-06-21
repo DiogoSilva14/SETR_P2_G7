@@ -1,3 +1,12 @@
+/** @file PI_controller.h
+ * @brief PI controller implementation 
+ *
+ * This is a library made for the SETR project. This is the PI implementation
+ * 
+ * @date 20 June 2022
+ * @bug No known bugs.
+ */
+ 
 #ifndef _PI_H    /* Guard against multiple inclusion */
 #define _PI_H
 
