@@ -1,0 +1,11 @@
+/**
+
+@mainpage MySag Documentation 
+
+@authors Diogo Silva 
+@authors Gonçalo Gomes
+@authors Mário Dias 
+
+This is a project developed for the SETR class. This is a project made for controlling the lights. It concists of two modes, an automatic one and a manual on wich can be toggle trought the  two left button on the board. In the manual mode, the user changes the luminosity via the two right buttons on the board. In the automatic mode, the user is able to set a luminosity value for each hour of the day. In this mode, the value of the luminosity is assured by a PI controller.
+*/
+
